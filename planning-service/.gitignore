@@ -1,0 +1,13 @@
+/target
+/.idea
+*.iml
+*.log
+*.class
+*.jar
+*.war
+.DS_Store
+.env
+spring.log
+**/application-*.yml
+/.vscode
+.mvn/
