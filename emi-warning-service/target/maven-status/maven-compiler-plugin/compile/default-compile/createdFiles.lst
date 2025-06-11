@@ -7,6 +7,7 @@ com\smartbalaram\emi\model\EmiResponse$EmiResponseBuilder.class
 com\smartbalaram\emi\util\AppConstants.class
 com\smartbalaram\emi\model\EmiRequest.class
 com\smartbalaram\emi\model\EmiRequest$EmiRequestBuilder.class
+com\smartbalaram\emi\graphql\EmiRequestGraphQLMapper.class
 com\smartbalaram\emi\EmiWarningServiceApplication.class
 com\smartbalaram\emi\service\EmiWarningService.class
 com\smartbalaram\emi\kafka\KafkaProducerService.class

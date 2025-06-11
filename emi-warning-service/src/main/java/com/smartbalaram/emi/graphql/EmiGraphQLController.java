@@ -21,14 +21,6 @@ public class EmiGraphQLController {
 
     private final EmiWarningService emiWarningService;
 
-    /**
-     * GraphQL Query: Get all EMI records stored in the database.
-     * @return List of EMIRequest objects.
-     */
-    @QueryMapping
-    public List<EmiRequest> allEmiRecords() {
-        return emiWarningService.getAllEmiRecords();
-    }
     
     /**
      * GraphQL Mutation: Evaluate EMI risk based on input request.
@@ -40,28 +32,36 @@ public class EmiGraphQLController {
     public EmiResponse evaluateEmi(@Argument("input") EmiRequest input) {
         return emiWarningService.evaluateEmi(input);
     }
-
-    /**
-     * GraphQL Query: Get EMI record by user ID.
-     * @param userId The unique user ID.
-     * @return Corresponding EMIRequest record.
-     */
-    @QueryMapping
-    public EmiRequest getEmiById(@Argument String userId) {
-        return emiWarningService.getEmiById(userId);
-    }
-
+    
     /**
      * GraphQL Query: Get the risk level based on EMI-to-income percentage.
      * @param percentage EMI percentage of income.
      * @return Risk level string.
      */
     @QueryMapping
-    public String getRiskLevel(@Argument double percentage) {
+    public String getRiskLevel(@Argument("percentage") double percentage) {
         return emiWarningService.getRiskLevel(percentage);
     }
-
    
+    /**
+     * GraphQL Query: Get all EMI records stored in the database.
+     * @return List of EMIRequest objects.
+     */
+    @QueryMapping
+    public List<EmiRequest> allEmiRecords() {
+        return emiWarningService.getAllEmiRecords();
+    }
+    
+    /**
+     * GraphQL Query: Get EMI record by user ID.
+     * @param userId The unique user ID.
+     * @return Corresponding EMIRequest record.
+     */
+    @QueryMapping
+    public EmiRequest getEmiById(@Argument("userId") String userId) {
+        return emiWarningService.getEmiById(userId);
+    }
+
 
     /**
      * GraphQL Query: Get all EMI threshold definitions (for LOW, MODERATE, HIGH).
@@ -79,7 +79,7 @@ public class EmiGraphQLController {
      * @return Saved EMIResponse.
      */
     @MutationMapping
-    public EmiResponse saveEmi(@Argument EmiRequest input) {
+    public EmiResponse saveEmi(@Argument("input") EmiRequest input) {
         return emiWarningService.saveEmi(input);
     }
 
@@ -89,10 +89,16 @@ public class EmiGraphQLController {
      * @return true if deletion succeeded.
      */
     @MutationMapping
-    public boolean deleteEmiById(@Argument String userId) {
+    public boolean deleteEmiById(@Argument("userId") String userId) {
         emiWarningService.deleteEmiById(userId);
         return true;
     }
+    
+    @QueryMapping
+    public Double getRecommendedCap(@Argument("monthlyIncome") double monthlyIncome) {
+        return emiWarningService.getRecommendedCap(monthlyIncome);
+    }
+
     
 }
 

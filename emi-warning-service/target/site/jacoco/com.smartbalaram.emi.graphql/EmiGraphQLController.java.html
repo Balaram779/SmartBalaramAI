@@ -21,14 +21,6 @@ public class EmiGraphQLController {
 
     private final EmiWarningService emiWarningService;
 
-    /**
-     * GraphQL Query: Get all EMI records stored in the database.
-     * @return List of EMIRequest objects.
-     */
-    @QueryMapping
-    public List&lt;EmiRequest&gt; allEmiRecords() {
-<span class="nc" id="L30">        return emiWarningService.getAllEmiRecords();</span>
-    }
     
     /**
      * GraphQL Mutation: Evaluate EMI risk based on input request.
@@ -38,30 +30,38 @@ public class EmiGraphQLController {
 
     @MutationMapping
     public EmiResponse evaluateEmi(@Argument(&quot;input&quot;) EmiRequest input) {
-<span class="nc" id="L41">        return emiWarningService.evaluateEmi(input);</span>
+<span class="nc" id="L33">        return emiWarningService.evaluateEmi(input);</span>
     }
-
-    /**
-     * GraphQL Query: Get EMI record by user ID.
-     * @param userId The unique user ID.
-     * @return Corresponding EMIRequest record.
-     */
-    @QueryMapping
-    public EmiRequest getEmiById(@Argument String userId) {
-<span class="nc" id="L51">        return emiWarningService.getEmiById(userId);</span>
-    }
-
+    
     /**
      * GraphQL Query: Get the risk level based on EMI-to-income percentage.
      * @param percentage EMI percentage of income.
      * @return Risk level string.
      */
     @QueryMapping
-    public String getRiskLevel(@Argument double percentage) {
-<span class="nc" id="L61">        return emiWarningService.getRiskLevel(percentage);</span>
+    public String getRiskLevel(@Argument(&quot;percentage&quot;) double percentage) {
+<span class="nc" id="L43">        return emiWarningService.getRiskLevel(percentage);</span>
+    }
+   
+    /**
+     * GraphQL Query: Get all EMI records stored in the database.
+     * @return List of EMIRequest objects.
+     */
+    @QueryMapping
+    public List&lt;EmiRequest&gt; allEmiRecords() {
+<span class="nc" id="L52">        return emiWarningService.getAllEmiRecords();</span>
+    }
+    
+    /**
+     * GraphQL Query: Get EMI record by user ID.
+     * @param userId The unique user ID.
+     * @return Corresponding EMIRequest record.
+     */
+    @QueryMapping
+    public EmiRequest getEmiById(@Argument(&quot;userId&quot;) String userId) {
+<span class="nc" id="L62">        return emiWarningService.getEmiById(userId);</span>
     }
 
-   
 
     /**
      * GraphQL Query: Get all EMI threshold definitions (for LOW, MODERATE, HIGH).
@@ -79,7 +79,7 @@ public class EmiGraphQLController {
      * @return Saved EMIResponse.
      */
     @MutationMapping
-    public EmiResponse saveEmi(@Argument EmiRequest input) {
+    public EmiResponse saveEmi(@Argument(&quot;input&quot;) EmiRequest input) {
 <span class="nc" id="L83">        return emiWarningService.saveEmi(input);</span>
     }
 
@@ -89,7 +89,7 @@ public class EmiGraphQLController {
      * @return true if deletion succeeded.
      */
     @MutationMapping
-    public boolean deleteEmiById(@Argument String userId) {
+    public boolean deleteEmiById(@Argument(&quot;userId&quot;) String userId) {
 <span class="nc" id="L93">        emiWarningService.deleteEmiById(userId);</span>
 <span class="nc" id="L94">        return true;</span>
     }

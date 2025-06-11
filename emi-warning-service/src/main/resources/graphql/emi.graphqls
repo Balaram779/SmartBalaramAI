@@ -3,6 +3,7 @@ type Query {
   getEmiById(userId: String!): EmiRequest
   getRiskLevel(percentage: Float!): String
   getThresholdDetails: [String]
+  getRecommendedCap(monthlyIncome: Float!): Float
 }
 
 type Mutation {
@@ -26,6 +27,9 @@ type EmiRequest {
   missedEmiCount: Int
   loanTenureMonths: Int
   warning: Boolean
+  emiPercentage: Float
+  riskLevel: String
+  warningMessage: String
 }
 
 type EmiResponse {

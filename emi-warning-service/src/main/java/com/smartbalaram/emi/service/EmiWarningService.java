@@ -20,8 +20,6 @@ public class EmiWarningService {
 
     private final KafkaProducerService kafkaProducerService;
     private final EmiWarningRepository emiWarningRepository;
-    private final RiskLevelUtils riskLevelUtils;
-
     private static final Logger logger = LoggerFactory.getLogger(EmiWarningService.class);
 
     /**
@@ -32,13 +30,13 @@ public class EmiWarningService {
 
         double emiPercentage = (request.getTotalEmiAmount() / request.getMonthlyIncome()) * 100;
 
-        String riskLevel = riskLevelUtils.determineRiskLevel(
+        String riskLevel = RiskLevelUtils.determineRiskLevel(
                 emiPercentage,
                 request.getMissedEmiCount(),
                 request.getLoanTenureMonths()
         );
 
-        String warning = riskLevelUtils.getWarningMessage(riskLevel);
+        String warning = RiskLevelUtils.getWarningMessage(riskLevel);
 
         double suggestedMaxEmi = Math.round(request.getMonthlyIncome() * RECOMMENDED_EMI_CAP_RATIO);
 
@@ -73,8 +71,9 @@ public class EmiWarningService {
     public EmiRequest getEmiById(String userId) {
         logger.info("🔍 Fetching EMI by userId: {}", userId);
         return emiWarningRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found: " + userId));
+        		.orElse(null); // ✅ avoid crashing
     }
+
 
     public void deleteEmiById(String userId) {
         logger.warn("🗑️ Deleting EMI record for userId: {}", userId);
@@ -92,14 +91,14 @@ public class EmiWarningService {
     }
 
     public String getRiskLevel(double percentage) {
-        return riskLevelUtils.determineRiskLevel(percentage, 0, 0);
+        return RiskLevelUtils.determineRiskLevel(percentage, 0, 0);
     }
 
     public List<String> getThresholdDetails() {
         return List.of(
-            RISK_LOW + ": score ≤ " + riskLevelUtils.getScoreThresholdLow(),
-            RISK_MODERATE + ": score ≤ " + riskLevelUtils.getScoreThresholdMedium(),
-            RISK_HIGH + ": score > " + riskLevelUtils.getScoreThresholdMedium()
+            RISK_LOW + ": score ≤ " + RiskLevelUtils.getScoreThresholdLow(),
+            RISK_MODERATE + ": score ≤ " + RiskLevelUtils.getScoreThresholdMedium(),
+            RISK_HIGH + ": score > " + RiskLevelUtils.getScoreThresholdMedium()
         );
     }
 

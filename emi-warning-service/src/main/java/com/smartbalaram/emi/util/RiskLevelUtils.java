@@ -64,7 +64,7 @@ public class RiskLevelUtils {
     public static String determineRiskLevel(double emiPercent, int missedEmis, int tenureMonths) {
         double score = (emiPercent * weightEmiPercent)
                      + (missedEmis * weightMissedEmi)
-                     + (tenureMonths * weightTenure);
+                     + (tenureMonths * weightTenure); //100+0+20
 
         if (score <= scoreThresholdLow) return RISK_LOW;
         else if (score <= scoreThresholdMedium) return RISK_MODERATE;
