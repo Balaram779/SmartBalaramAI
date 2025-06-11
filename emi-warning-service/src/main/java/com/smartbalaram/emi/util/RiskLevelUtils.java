@@ -2,7 +2,6 @@ package com.smartbalaram.emi.util;
 
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import static com.smartbalaram.emi.util.AppConstants.*;
@@ -12,29 +11,10 @@ import static com.smartbalaram.emi.util.AppConstants.*;
  * - Config-driven weights & thresholds
  */
 
-
 @Component
 @Getter
 public class RiskLevelUtils {
-	
 
-    // 🔧 AI Scoring Weights (loaded from application.yml)
-    //@Value("${risk.weight-emi-percent}")
-    //private double weightEmiPercent;
-
-   // @Value("${risk.weight-missed-emi}")
-   // private double weightMissedEmi;
-
-   // @Value("${risk.weight-tenure}")
-   // private double weightTenure;
-
-  //  @Value("${risk.score-threshold-low}")
-   // private double scoreThresholdLow;
-
-   // @Value("${risk.score-threshold-medium}")
-    //private double scoreThresholdMedium;
-
-    
     // =======================
     // 🔧 Configurable Weights
     // =======================
@@ -48,28 +28,35 @@ public class RiskLevelUtils {
     private static double scoreThresholdLow;
     private static double scoreThresholdMedium;
 
+    // ======================
+    // ✅ Initialize Defaults
+    // ======================
+    @PostConstruct
+    public void init() {
+        // Default values can later be overridden using setWeights/setThresholds
+        weightEmiPercent = 1.0;
+        weightMissedEmi = 5.0;
+        weightTenure = 0.2;
+
+        scoreThresholdLow = 30.0;
+        scoreThresholdMedium = 60.0;
+    }
+
     // ==============================
     // ✅ Public Configuration Setup
     // ==============================
 
-    /**
-     * Set weights for EMI %, Missed EMI Count, and Tenure.
-     */
     public static void setWeights(double emiWeight, double missedEmiWeight, double tenureWeight) {
         weightEmiPercent = emiWeight;
         weightMissedEmi = missedEmiWeight;
         weightTenure = tenureWeight;
     }
 
-    /**
-     * Set thresholds for risk scoring (LOW and MEDIUM).
-     */
     public static void setThresholds(double low, double medium) {
         scoreThresholdLow = low;
         scoreThresholdMedium = medium;
     }
 
-    
     /**
      * 🔍 AI Risk Scoring Logic
      * Calculates weighted score and assigns risk level
@@ -95,17 +82,7 @@ public class RiskLevelUtils {
             default            -> MESSAGE_INVALID;
         };
     }
- /*   public static void setWeights(double emiWeight, double missedEmiWeight, double tenureWeight) {
-        weightEmiPercent = emiWeight;
-        weightMissedEmi = missedEmiWeight;
-        weightTenure = tenureWeight;
-    }
 
-    public static void setThresholds(double low, double medium) {
-        scoreThresholdLow = low;
-        scoreThresholdMedium = medium;
-    }
-*/
     public static double getScoreThresholdLow() {
         return scoreThresholdLow;
     }
@@ -113,5 +90,4 @@ public class RiskLevelUtils {
     public static double getScoreThresholdMedium() {
         return scoreThresholdMedium;
     }
-
 }

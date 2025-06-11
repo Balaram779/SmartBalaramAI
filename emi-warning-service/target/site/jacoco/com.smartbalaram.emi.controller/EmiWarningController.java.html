@@ -9,36 +9,69 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * REST controller for EMI warning service. Handles requests related to EMI
+ * evaluation, risk level, cap calculation, etc.
+ */
 @RestController
-@RequestMapping(&quot;/api/emi&quot;)
-<span class="fc" id="L14">@RequiredArgsConstructor</span>
+@RequestMapping(&quot;/api/emi&quot;) // Base URL for all endpoints in this controller
+<span class="fc" id="L18">@RequiredArgsConstructor // Auto-generates constructor for final fields (emiWarningService)</span>
 public class EmiWarningController {
 
-    private final EmiWarningService emiWarningService;
+	private final EmiWarningService emiWarningService;
 
-    @PostMapping(&quot;/warn&quot;)
-    public ResponseEntity&lt;EmiResponse&gt; getEmiWarning(@RequestBody EmiRequest request) {
-<span class="fc" id="L21">        return ResponseEntity.ok(emiWarningService.evaluateEmi(request));</span>
-    }
+	/**
+	 * Endpoint to evaluate EMI risk based on EMI amount and income.
+	 * 
+	 * @param request Incoming request with EMI details.
+	 * @return EMI evaluation response containing risk level and message.
+	 */
+	@PostMapping(&quot;/warn&quot;)
+	public ResponseEntity&lt;EmiResponse&gt; getEmiWarning(@RequestBody EmiRequest request) {
+<span class="fc" id="L31">		return ResponseEntity.ok(emiWarningService.evaluateEmi(request));</span>
+	}
 
-    @GetMapping(&quot;/cap/{monthlyIncome}&quot;)
-    public ResponseEntity&lt;Double&gt; getRecommendedEmiCap(@PathVariable(&quot;monthlyIncome&quot;) double monthlyIncome) {
-<span class="fc" id="L26">        return ResponseEntity.ok(emiWarningService.getRecommendedCap(monthlyIncome));</span>
-    }
+	/**
+	 * Endpoint to get recommended EMI cap for a given income. Example logic: 40% of
+	 * monthly income.
+	 * 
+	 * @param monthlyIncome Monthly income of the user.
+	 * @return Recommended maximum EMI value.
+	 */
+	@GetMapping(&quot;/cap/{monthlyIncome}&quot;)
+	public ResponseEntity&lt;Double&gt; getRecommendedEmiCap(@PathVariable(&quot;monthlyIncome&quot;) double monthlyIncome) {
+<span class="fc" id="L43">		return ResponseEntity.ok(emiWarningService.getRecommendedCap(monthlyIncome));</span>
+	}
 
-    @GetMapping(&quot;/risk/{percentage}&quot;)
-    public ResponseEntity&lt;String&gt; getRiskLevel(@PathVariable(&quot;percentage&quot;) double percentage) {
-<span class="fc" id="L31">        return ResponseEntity.ok(emiWarningService.getRiskLevel(percentage));</span>
-    }
-  
-    @GetMapping(&quot;/thresholds&quot;)
-    public ResponseEntity&lt;List&lt;String&gt;&gt; getThresholdDefinitions() {
-<span class="fc" id="L36">        return ResponseEntity.ok(emiWarningService.getThresholdDetails());</span>
-    }
+	/**
+	 * Endpoint to get risk level for a given EMI-to-income percentage.
+	 * 
+	 * @param percentage EMI percentage of income.
+	 * @return Risk level (LOW, MODERATE, HIGH).
+	 */
+	@GetMapping(&quot;/risk/{percentage}&quot;)
+	public ResponseEntity&lt;String&gt; getRiskLevel(@PathVariable(&quot;percentage&quot;) double percentage) {
+<span class="fc" id="L54">		return ResponseEntity.ok(emiWarningService.getRiskLevel(percentage));</span>
+	}
 
-    @GetMapping(&quot;/ping&quot;)
-    public String ping() {
-<span class="fc" id="L41">        return &quot;✅ EMI service is up!&quot;;</span>
-    }
+	/**
+	 * Endpoint to retrieve all configured EMI risk threshold messages.
+	 * 
+	 * @return List of threshold messages.
+	 */
+	@GetMapping(&quot;/thresholds&quot;)
+	public ResponseEntity&lt;List&lt;String&gt;&gt; getThresholdDefinitions() {
+<span class="fc" id="L64">		return ResponseEntity.ok(emiWarningService.getThresholdDetails());</span>
+	}
+
+	/**
+	 * Health check endpoint to verify service is running.
+	 * 
+	 * @return Success message if service is up.
+	 */
+	@GetMapping(&quot;/ping&quot;)
+	public String ping() {
+<span class="fc" id="L74">		return &quot;✅ EMI service is up!&quot;;</span>
+	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
