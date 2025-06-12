@@ -1,0 +1,12 @@
+server:
+  port: 8085
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/authdb
+      database: authdb
+
+jwt:
+  secret: dev-secret-key-1234  # ✅ For local only, not for prod
+  expiration: 86400000         # 1 day in ms
