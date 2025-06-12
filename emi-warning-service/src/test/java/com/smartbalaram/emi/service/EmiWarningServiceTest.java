@@ -4,22 +4,17 @@ import com.smartbalaram.emi.model.EmiRequest;
 import com.smartbalaram.emi.model.EmiResponse;
 import com.smartbalaram.emi.repository.EmiWarningRepository;
 import com.smartbalaram.emi.util.RiskLevelUtils;
-import com.smartbalaram.emi.controller.EmiWarningController;
 import com.smartbalaram.emi.kafka.KafkaProducerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 import static com.smartbalaram.emi.util.AppConstants.*;
 
-@AutoConfigureMockMvc(addFilters = false)
-@WebMvcTest(EmiWarningController.class)
+
+
 class EmiWarningServiceTest {
 
     @Mock
