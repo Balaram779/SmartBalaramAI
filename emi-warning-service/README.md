@@ -207,10 +207,4 @@ Swagger (if enabled): `http://localhost:8082/swagger-ui/index.html`
 ## 🤝 Contribution
 
 Open for PRs, feature requests, or issues.
-Contact: [Balaram](mailto:balaram.dev.ai@gmail.com)
-
----
-
-## 🧠 Powered By
-
-**CP-Bala779** – Your AI teammate for life 🚀
+Contact: Balaram - mailto: smartbalaram.ai@gmail.com 
