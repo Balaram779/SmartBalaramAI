@@ -1,7 +1,6 @@
 spring:
-  application:
-    name: auth-service
-
-  jackson:
-    serialization:
-      INDENT_OUTPUT: true
+  profiles:
+    active: dev
+logging:
+ level:
+  org.springframework.security: DEBUG

@@ -6,6 +6,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +23,21 @@ import java.util.function.Function;
  */
 @Service
 public class JwtService {
+	@Value("${jwt.secret}")
+    private String secret;
 
-    private static final long EXPIRATION_TIME = 86400000; // 1 day (ms)
-    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256); // HS256 secret key
+    @Value("${jwt.expiration}")
+    private long expiration;
+    /**
+	 * Returns the signing key used for JWT token generation.
+	 * Uses HMAC SHA-256 algorithm with the secret from application properties.
+	 */
+    private Key getSignKey() {
+        return Keys.hmacShaKeyFor(secret.getBytes());
+    }
+
+   // private static final long EXPIRATION_TIME = 86400000; // 1 day (ms)
+    //private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256); // HS256 secret key
 
     /**
      * Generates a JWT token for a given user.
@@ -33,8 +47,8 @@ public class JwtService {
                 .setSubject(user.getUsername())             // Username = subject
                 .claim("role", user.getRole())              // Custom claim
                 .setIssuedAt(new Date())                    // Token issue timestamp
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME)) // Expiry
-                .signWith(key)                              // Sign with secret key
+                .setExpiration(new Date(System.currentTimeMillis() + expiration)) // Expiry
+                .signWith(getSignKey(), SignatureAlgorithm.HS256)                              // Sign with secret key
                 .compact();
     }
 
@@ -73,7 +87,7 @@ public class JwtService {
      */
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(key) // Set secret
+                .setSigningKey(getSignKey()) // Set secret
                 .build()
                 .parseClaimsJws(token)
                 .getBody();

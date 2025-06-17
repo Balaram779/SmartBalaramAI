@@ -3,6 +3,7 @@ package com.smartbalaram.auth.model;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,7 +24,7 @@ public class User implements UserDetails {
 
     @Id
     private String id;
-
+    @Indexed(unique = true)
     private String email;    // Used as username
     private String password; // Encrypted password (BCrypt, etc.)
     private String role;     // Example: "ADMIN", "USER"

@@ -8,5 +8,5 @@ spring:
       database: authdb
 
 jwt:
-  secret: dev-secret-key-1234  # ✅ For local only, not for prod
+  secret: dev-smartbalaram-jwt-secret-key-2025!  # ✅ For local only, not for prod
   expiration: 86400000         # 1 day in ms

@@ -8,6 +8,8 @@ import com.smartbalaram.auth.model.User;
 import com.smartbalaram.auth.repository.UserRepository;
 import com.smartbalaram.auth.security.JwtService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
  * - Register new user and return JWT token
  * - Login (authenticate) and return JWT token
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -37,15 +40,15 @@ public class AuthService {
      */
     public AuthResponse register(RegisterRequest request) {
         // ✅ Build user entity
-        var user = User.builder()
+    	User user = User.builder()
                 .email(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
                 .build();
 
         // 🗂️ Save to MongoDB
-        userRepository.save(user);
-
+    	User  savedUser=userRepository.save(user);
+        log.info("✅ Registered user: {}", savedUser.getEmail());
         // 🎟️ Generate JWT
         var jwtToken = jwtService.generateToken(user);
         return new AuthResponse(jwtToken);
@@ -58,6 +61,9 @@ public class AuthService {
      * @return JWT token wrapped in AuthResponse
      */
     public AuthResponse login(AuthRequest request) {
+    	
+    	try {
+    	log.info("🔐 Attempting login for: {}", request.getUsername());
         // 🔐 Authenticate credentials using Spring Security
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
@@ -67,11 +73,19 @@ public class AuthService {
         );
 
         // 🧾 Fetch user from DB
-        User user = userRepository.findByUsername(request.getUsername())
+        User user = userRepository.findByEmail(request.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         // 🎟️ Generate JWT
         String jwtToken = jwtService.generateToken(user);
+        log.info("✅ Login success, JWT generated for: {}", user.getUsername());
+
+
         return new AuthResponse(jwtToken);
+    	} catch (Exception ex) {
+            log.error("❌ Login failed for user '{}': {}", request.getUsername(), ex.getMessage());
+            throw ex;
+
+    	}
     }
 }

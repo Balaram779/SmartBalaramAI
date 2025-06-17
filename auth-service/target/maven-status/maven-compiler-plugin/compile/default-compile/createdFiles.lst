@@ -6,8 +6,11 @@ com\smartbalaram\auth\model\AuthRequest.class
 com\smartbalaram\auth\service\AuthService.class
 com\smartbalaram\auth\repository\UserRepository.class
 com\smartbalaram\auth\security\JwtService.class
+com\smartbalaram\auth\controller\CommonController.class
 com\smartbalaram\auth\security\JwtAuthFilter.class
+com\smartbalaram\auth\controller\AdminController.class
 com\smartbalaram\auth\model\AuthResponse.class
 com\smartbalaram\auth\security\SecurityConfig.class
 com\smartbalaram\auth\security\CustomUserDetailsService.class
+com\smartbalaram\auth\controller\UserController.class
 com\smartbalaram\auth\model\RegisterRequest.class
