@@ -2,6 +2,9 @@ server:
   port: 8082
 
 spring:
+  profiles:
+    active: dev   # ✅ Activate dev profile to load application-dev.yml
+
   data:
     mongodb:
       uri: mongodb://localhost:27017/emiwarning-db

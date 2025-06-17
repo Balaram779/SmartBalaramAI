@@ -1,7 +1,6 @@
 package com.smartbalaram.emi.kafka;
 
 import com.smartbalaram.emi.model.EmiResponse;
-import org.apache.kafka.clients.producer.ProducerRecord;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
