@@ -204,6 +204,49 @@ Swagger (if enabled): `http://localhost:8082/swagger-ui/index.html`
 
 ---
 
+
+## 🔒 Secured Access with JWT
+
+All endpoints require a valid JWT issued from **auth-service**. The JWT is validated via `JwtAuthFilter`.
+
+---
+
+## 🔧 Core Endpoints
+
+| Endpoint                   | Description                          | Method | Secured |
+|---------------------------|--------------------------------------|--------|---------|
+| `/api/emi/warn`           | Evaluate EMI warning                 | POST   | ✅ Yes  |
+| `/api/emi/cap/{income}`   | Recommend max EMI cap                | GET    | ✅ Yes  |
+| `/api/emi/risk/{percent}` | Get risk level by EMI %              | GET    | ✅ Yes  |
+| `/api/emi/thresholds`     | Get all EMI risk definitions         | GET    | ✅ Yes  |
+| `/api/emi/ping`           | Health check                         | GET    | ✅ Yes  |
+
+---
+
+## ✅ JWT Integration Flow
+
+- JWT passed in `Authorization` header: `Bearer <token>`
+- Filter: `JwtAuthFilter` extracts username, validates token
+- On success: Spring Security sets authentication context
+
+---
+
+## 🧪 Tests
+
+- All controller and service tests are working ✅
+- Security test: Valid token required (403 otherwise)
+
+---
+
+## 📂 Tech Stack
+
+- Spring Boot 3.2.4
+- MongoDB (local)
+- Kafka (for warning stream, topic: `emi-warning-topic`)
+- Spring Security + JWT (Auth Integration)
+
+-----
+
 ## 🤝 Contribution
 
 Open for PRs, feature requests, or issues.
