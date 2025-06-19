@@ -41,8 +41,7 @@ public class EmiWarningService {
         double suggestedMaxEmi = Math.round(request.getMonthlyIncome() * RECOMMENDED_EMI_CAP_RATIO);
 
         emiWarningRepository.save(request);
-        kafkaProducerService.sendEmiWarning(
-                request.getUserId(),
+        kafkaProducerService.sendEmiWarning(request.getUserId(),
                 buildResponse(request, emiPercentage, riskLevel, warning, suggestedMaxEmi)
         );
 

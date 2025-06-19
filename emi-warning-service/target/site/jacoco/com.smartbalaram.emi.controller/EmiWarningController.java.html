@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping(&quot;/api/emi&quot;) // Base URL for all endpoints in this controller
 <span class="fc" id="L18">@RequiredArgsConstructor // Auto-generates constructor for final fields (emiWarningService)</span>
+//@CrossOrigin(origins = &quot;*&quot;) // ✅ Allow local React access
 public class EmiWarningController {
 
 	private final EmiWarningService emiWarningService;
@@ -28,7 +29,7 @@ public class EmiWarningController {
 	 */
 	@PostMapping(&quot;/warn&quot;)
 	public ResponseEntity&lt;EmiResponse&gt; getEmiWarning(@RequestBody EmiRequest request) {
-<span class="fc" id="L31">		return ResponseEntity.ok(emiWarningService.evaluateEmi(request));</span>
+<span class="fc" id="L32">		return ResponseEntity.ok(emiWarningService.evaluateEmi(request));</span>
 	}
 
 	/**
@@ -40,7 +41,7 @@ public class EmiWarningController {
 	 */
 	@GetMapping(&quot;/cap/{monthlyIncome}&quot;)
 	public ResponseEntity&lt;Double&gt; getRecommendedEmiCap(@PathVariable(&quot;monthlyIncome&quot;) double monthlyIncome) {
-<span class="fc" id="L43">		return ResponseEntity.ok(emiWarningService.getRecommendedCap(monthlyIncome));</span>
+<span class="fc" id="L44">		return ResponseEntity.ok(emiWarningService.getRecommendedCap(monthlyIncome));</span>
 	}
 
 	/**
@@ -51,7 +52,7 @@ public class EmiWarningController {
 	 */
 	@GetMapping(&quot;/risk/{percentage}&quot;)
 	public ResponseEntity&lt;String&gt; getRiskLevel(@PathVariable(&quot;percentage&quot;) double percentage) {
-<span class="fc" id="L54">		return ResponseEntity.ok(emiWarningService.getRiskLevel(percentage));</span>
+<span class="fc" id="L55">		return ResponseEntity.ok(emiWarningService.getRiskLevel(percentage));</span>
 	}
 
 	/**
@@ -61,7 +62,7 @@ public class EmiWarningController {
 	 */
 	@GetMapping(&quot;/thresholds&quot;)
 	public ResponseEntity&lt;List&lt;String&gt;&gt; getThresholdDefinitions() {
-<span class="fc" id="L64">		return ResponseEntity.ok(emiWarningService.getThresholdDetails());</span>
+<span class="fc" id="L65">		return ResponseEntity.ok(emiWarningService.getThresholdDetails());</span>
 	}
 
 	/**
@@ -71,7 +72,7 @@ public class EmiWarningController {
 	 */
 	@GetMapping(&quot;/ping&quot;)
 	public String ping() {
-<span class="fc" id="L74">		return &quot;✅ EMI service is up!&quot;;</span>
+<span class="fc" id="L75">		return &quot;✅ EMI service is up!&quot;;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

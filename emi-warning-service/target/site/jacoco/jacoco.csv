@@ -6,7 +6,7 @@ emi-warning-service,com.smartbalaram.emi.controller,EmiWarningController,0,32,0,
 emi-warning-service,com.smartbalaram.emi.util,AppConstants,3,0,0,0,1,0,1,0,1,0
 emi-warning-service,com.smartbalaram.emi.util,RiskLevelUtils,19,55,1,7,10,15,5,8,4,4
 emi-warning-service,com.smartbalaram.emi.util,KafkaConstants,3,0,0,0,1,0,1,0,1,0
-emi-warning-service,com.smartbalaram.emi.service,EmiWarningService,83,104,2,0,23,25,8,5,7,5
+emi-warning-service,com.smartbalaram.emi.service,EmiWarningService,83,104,2,0,23,24,8,5,7,5
 emi-warning-service,com.smartbalaram.emi.kafka,KafkaProducerService,0,22,0,0,0,5,0,3,0,3
 emi-warning-service,com.smartbalaram.emi.config,KafkaProducerConfig,33,0,0,0,7,0,3,0,3,0
 emi-warning-service,com.smartbalaram.emi.config,TraceIdFilter,0,16,0,0,0,6,0,2,0,2

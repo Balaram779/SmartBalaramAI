@@ -28,5 +28,21 @@ public class SecurityConfig {
 
 <span class="nc" id="L29">        return http.build();</span>
     }
+    
+   /* @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -&gt; csrf.disable())
+            .authorizeHttpRequests(auth -&gt; auth
+                .requestMatchers(&quot;/swagger-ui/**&quot;, &quot;/v3/api-docs/**&quot;).permitAll()
+                .requestMatchers(&quot;/api/emi/**&quot;).permitAll() // ✅ Allow EMI APIs
+                .anyRequest().denyAll()
+            )
+            .sessionManagement(session -&gt; session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+    } */
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

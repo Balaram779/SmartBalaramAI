@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/emi") // Base URL for all endpoints in this controller
 @RequiredArgsConstructor // Auto-generates constructor for final fields (emiWarningService)
+@CrossOrigin(origins = "*") // ✅ Allow local React access
 public class EmiWarningController {
 
 	private final EmiWarningService emiWarningService;
