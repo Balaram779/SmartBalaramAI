@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * All authentication logic is delegated to the AuthService.
  */
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor // Generates constructor for final fields (authService)
 public class AuthController {
 

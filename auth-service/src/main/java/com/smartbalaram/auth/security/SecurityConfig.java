@@ -1,4 +1,3 @@
-// File: SecurityConfig.java
 package com.smartbalaram.auth.security;
 
 import lombok.RequiredArgsConstructor;
@@ -33,10 +32,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // Disable CSRF for APIs (since stateless)
+            .csrf(csrf -> csrf.disable()) // Disable CSRF for APIs (stateless)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    "/api/auth/**",              // Public auth endpoints
+                    "/api/v1/auth/**",           // ✅ Corrected path for login/register
                     "/swagger-ui/**",            // Swagger UI
                     "/v3/api-docs/**"            // OpenAPI docs
                 ).permitAll()
@@ -47,7 +46,7 @@ public class SecurityConfig {
                 .anyRequest().denyAll()                             // Deny anything else
             )
             .sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // No session storage
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // No session
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); // 🔑 JWT before auth
 
@@ -67,6 +66,6 @@ public class SecurityConfig {
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Recommended encoder
+        return new BCryptPasswordEncoder();
     }
 }
